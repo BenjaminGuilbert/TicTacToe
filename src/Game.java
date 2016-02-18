@@ -2,17 +2,31 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame {
 	
 	private GameContainer container;
-
-	
+	private Image[] sprites = new Image[2];
+    private Rectangle[] uiSquares = new Rectangle[9];
+	public static final int CROSS = 0;
+	public static final int CIRCLE = 1;
 
 	public Game() {
 		super("tic-tac-toe");
-		// TODO Auto-generated constructor stub
+		try {
+			sprites[Game.CROSS] = new Image("pictures/cross.png");
+			sprites[Game.CIRCLE] = new Image("res/circle.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        for (int i = 0; i < 9; i++) {
+            uiSquares[i] = new Rectangle(57 + 130 * (i % 3),
+                                         57 + 130 * (i / 3),
+                                         105, 105);
+        }
 	}
 
 	@Override
