@@ -8,18 +8,16 @@ public class Board {
 		this._board = new Token[9];
 	}
 	
-	public void getToken(int x, int y, Token t){
-		int index = x+(3*y+1);
-		this._board[index] = t;
+	public void setToken(int index, Players p){
+		this._board[index] = p.getToken();
 	}
 	
-	public Token setToken(int x, int y){
-		int index = x+(3*y+1);
+	public Token getToken(int index){
 		return this._board[index];
 	}
 	
-	public Boolean isEmpty(int x, int y){
-		int index = x+(3*y+1);
+	
+	public boolean isEmpty(int index){
 		return this._board[index].isEmpty();
 	}
 	
@@ -43,4 +41,5 @@ public class Board {
 		
 		return winner;
 	}
+
 }
