@@ -6,6 +6,9 @@ public class Board {
 	
 	public Board(){
 		this._board = new Token[9];
+		for(int i=0; i<9; i++){
+			this._board[i] = Token.EMPTY;
+		}
 	}
 	
 	public void setToken(int index, Players p){

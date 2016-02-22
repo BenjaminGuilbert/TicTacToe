@@ -4,6 +4,7 @@ public enum Token {
 	CIRCLE,
 	EMPTY;
 	
+	
 	public boolean isEmpty(){
 		return this == Token.EMPTY;
 	}

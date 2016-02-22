@@ -15,6 +15,8 @@ public class Game extends BasicGame {
     private Board board;
 	private GameContainer container;
 	private Players player;
+	private Graphics g;
+	private String errorMessage="";
 	
 
 	public Game(){
@@ -25,6 +27,7 @@ public class Game extends BasicGame {
 
 	@Override
 	public void render(GameContainer arg0, Graphics g) throws SlickException {
+		this.g = g;
 		g.drawLine(45, 175, 435, 175);
         g.drawLine(45, 305, 435, 305);
 
@@ -32,13 +35,21 @@ public class Game extends BasicGame {
         g.drawLine(305, 45, 305, 435);
 
         g.drawLine(480, 0, 480, 480);
-        /*
+        
+        
         for(int i=0; i<9; i++){
         	if(!this.board.isEmpty(i)){
-        		sprites[this.player.getToken().ordinal()].draw(100*i,100+i);
+        		int row = (i<3)?45:(i<6)?175:305;
+        		sprites[this.board.getToken(i).ordinal()].draw(130*(i%3)+46,row+1);
         	}
-        }*/
-        sprites[Token.CROSS.ordinal()].draw(100,100);
+        }
+        
+        g.drawString("Turn: " + this.player.getToken(), 500, 40);
+        g.drawString(this.errorMessage, 500, 100);
+        
+        Token winner = this.board.getWinner();
+        if(!winner.isEmpty())
+        	g.drawString("The winner is "+ winner.toString()+".", 500, 500);
 	}
 
 	@Override
@@ -59,6 +70,18 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int arg1) throws SlickException {
 		// TODO Auto-generated method stub
+
+	}
+	
+	private void checkAndSetToken(int index){
+		if(this.board.isEmpty(index)){
+    		this.board.setToken(index, this.player);
+    		this.errorMessage="";
+    		this.player.nextPlayer();
+    	}
+    	else {
+    		this.errorMessage = "This location is already check by\n -> "+this.board.getToken(index)+".\n Choose another place.";
+    	}
 	}
 	
     @Override
@@ -68,17 +91,35 @@ public class Game extends BasicGame {
         case Input.KEY_ESCAPE:
         	container.exit();
         	break;
-        case Input.KEY_A:
-        	this.board.setToken(0, this.player);
-        	break;
-        case Input.KEY_Z:
-        	this.board.setToken(1, this.player);
-        	break;
         case Input.KEY_E:
-        	this.board.setToken(2, this.player);
+        	this.checkAndSetToken(0);
+        	break;
+        case Input.KEY_R:
+        	this.checkAndSetToken(1);
+        	break;
+        case Input.KEY_T:
+        	this.checkAndSetToken(2);
+        	break;
+        case Input.KEY_D:
+        	this.checkAndSetToken(3);
+        	break;
+        case Input.KEY_F:
+        	this.checkAndSetToken(4);
+        	break;
+        case Input.KEY_G:
+        	this.checkAndSetToken(5);
+        	break;
+        case Input.KEY_C:
+        	this.checkAndSetToken(6);
+        	break;
+        case Input.KEY_V:
+        	this.checkAndSetToken(7);
+        	break;
+        case Input.KEY_B:
+        	this.checkAndSetToken(8);
         	break;
         }
-        this.player.nextPlayer();
+        
     }
 	
 	public static void main(String[] args) throws SlickException {
