@@ -15,19 +15,17 @@ public class Game extends BasicGame {
     private Board board;
 	private GameContainer container;
 	private Players player;
-	private Graphics g;
 	private String errorMessage="";
 	
 
 	public Game(){
 		super("tic-tac-toe");
-		this.board = new Board();
+		
 		this.player = new Players();
 	}
 
 	@Override
 	public void render(GameContainer arg0, Graphics g) throws SlickException {
-		this.g = g;
 		g.drawLine(45, 175, 435, 175);
         g.drawLine(45, 305, 435, 305);
 
@@ -55,6 +53,7 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		this.container = container;
+		this.board = new Board();
 		sprites[Token.CROSS.ordinal()] = new Image("pictures/cross.png");
         sprites[Token.CIRCLE.ordinal()] = new Image("pictures/circle.png");
 		
@@ -82,6 +81,31 @@ public class Game extends BasicGame {
     	else {
     		this.errorMessage = "This location is already check by\n -> "+this.board.getToken(index)+".\n Choose another place.";
     	}
+	}
+	
+	public void mousePressed(int Button, int y, int x){
+		int index=-1;
+		if(Button == 0){
+			if(x>45 && x<175){
+				index=0;				
+			}else if(x>175 && x<305){
+				index=3;
+			}else if(x>305 && x<435){
+				index=6;
+			}
+			
+			if(y>45 && y<175){
+				index+=0;				
+			}else if(y>175 && y<305){
+				index+=1;
+			}else if(y>305 && y<435){
+				index+=2;
+			}
+			
+			if(index>-1)this.checkAndSetToken(index);
+		}
+		
+		
 	}
 	
     @Override
@@ -117,6 +141,14 @@ public class Game extends BasicGame {
         	break;
         case Input.KEY_B:
         	this.checkAndSetToken(8);
+        	break;
+        case Input.KEY_I:
+        	try {
+				this.init(this.container);
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	break;
         }
         
