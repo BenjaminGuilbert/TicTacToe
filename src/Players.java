@@ -13,8 +13,7 @@ public class Players {
 		}
 		else {
 			this.token = Token.CROSS;
-		}
-		
+		}		
 	}
 	
 	public Token getToken(){

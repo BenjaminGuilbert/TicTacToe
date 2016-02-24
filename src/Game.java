@@ -17,24 +17,22 @@ public class Game extends BasicGame {
 	private Players player;
 	private String errorMessage="";
 	
-
+	//Constructor
 	public Game(){
-		super("tic-tac-toe");
-		
+		super("tic-tac-toe");		
 		this.player = new Players();
 	}
 
 	@Override
 	public void render(GameContainer arg0, Graphics g) throws SlickException {
+		//display lines
 		g.drawLine(45, 175, 435, 175);
         g.drawLine(45, 305, 435, 305);
-
         g.drawLine(175, 45, 175, 435);
         g.drawLine(305, 45, 305, 435);
-
         g.drawLine(480, 0, 480, 480);
         
-        
+        //display cross or circle in board
         for(int i=0; i<9; i++){
         	if(!this.board.isEmpty(i)){
         		int row = (i<3)?45:(i<6)?175:305;
@@ -42,9 +40,12 @@ public class Game extends BasicGame {
         	}
         }
         
-        g.drawString("Turn: " + this.player.getToken(), 500, 40);
+        //display some informations
+        g.drawString("esc : quit\ni : init", 500, 20);        
+        g.drawString("Turn: " + this.player.getToken(), 500, 90);
         g.drawString(this.errorMessage, 500, 100);
         
+        //display the winner
         Token winner = this.board.getWinner();
         if(!winner.isEmpty())
         	g.drawString("The winner is "+ winner.toString()+".", 500, 500);
@@ -72,6 +73,7 @@ public class Game extends BasicGame {
 
 	}
 	
+	//method to check is the place is empty before to put a token
 	private void checkAndSetToken(int index){
 		if(this.board.isEmpty(index)){
     		this.board.setToken(index, this.player);
@@ -83,6 +85,7 @@ public class Game extends BasicGame {
     	}
 	}
 	
+	//method to read the mouse event
 	public void mousePressed(int Button, int y, int x){
 		int index=-1;
 		if(Button == 0){
@@ -103,11 +106,10 @@ public class Game extends BasicGame {
 			}
 			
 			if(index>-1)this.checkAndSetToken(index);
-		}
-		
-		
+		}		
 	}
 	
+	//method to read the event keyboard
     @Override
     public void keyReleased(int key, char c) {
 
@@ -154,6 +156,7 @@ public class Game extends BasicGame {
         
     }
 	
+    // main method
 	public static void main(String[] args) throws SlickException {
 		new AppGameContainer(new Game(), 800, 600, false).start();
 	}
