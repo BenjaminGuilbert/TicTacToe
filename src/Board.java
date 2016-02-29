@@ -3,6 +3,7 @@
 public class Board {
 
 	private Token[] _board;
+	//private Token player;
 	
 	public Board(){
 		this._board = new Token[9];
@@ -50,6 +51,10 @@ public class Board {
 		}
 		
 		return winner;
+	}
+	
+	public void init(){
+		
 	}
 
 }
